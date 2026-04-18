@@ -2,418 +2,800 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waleed Munir | HKUST CS Student</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 60px 40px;
-            text-align: center;
-        }
-        
-        .header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            animation: fadeInDown 1s;
-        }
-        
-        .header .subtitle {
-            font-size: 1.2em;
-            opacity: 0.9;
-            animation: fadeInUp 1s;
-        }
-        
-        .header .badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            padding: 8px 20px;
-            border-radius: 50px;
-            margin-top: 20px;
-            font-weight: 600;
-            animation: fadeIn 1.5s;
-        }
-        
-        .content {
-            padding: 40px;
-        }
-        
-        .section {
-            margin-bottom: 40px;
-            animation: fadeIn 1s;
-        }
-        
-        .section h2 {
-            color: #764ba2;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-            display: inline-block;
-        }
-        
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .contact-item {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .contact-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .contact-item i {
-            font-size: 24px;
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-        
-        .contact-item a {
-            color: #333;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .contact-item a:hover {
-            color: #667eea;
-        }
-        
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .skill-tag {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.9em;
-            font-weight: 600;
-            transition: transform 0.3s;
-        }
-        
-        .skill-tag:hover {
-            transform: scale(1.05);
-        }
-        
-        .project-card {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-            border-left: 4px solid #667eea;
-        }
-        
-        .project-card:hover {
-            transform: translateX(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .project-card h3 {
-            color: #764ba2;
-            margin-bottom: 10px;
-        }
-        
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 15px 0;
-        }
-        
-        .tech-badge {
-            background: #e9ecef;
-            color: #495057;
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 0.8em;
-            font-weight: 600;
-        }
-        
-        .project-links {
-            margin-top: 15px;
-        }
-        
-        .project-links a {
-            display: inline-block;
-            padding: 8px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: opacity 0.3s;
-        }
-        
-        .project-links a:hover {
-            opacity: 0.9;
-        }
-        
-        .experience-item {
-            margin-bottom: 25px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
-        
-        .experience-item h3 {
-            color: #764ba2;
-            margin-bottom: 5px;
-        }
-        
-        .experience-date {
-            color: #667eea;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        .achievement-badge {
-            background: #f8f9fa;
-            border: 2px solid #667eea;
-            color: #667eea;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .achievement-badge:hover {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: transparent;
-        }
-        
-        .footer {
-            background: #f8f9fa;
-            padding: 30px;
-            text-align: center;
-            color: #666;
-            border-top: 1px solid #e9ecef;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .header h1 { font-size: 2em; }
-            .content { padding: 20px; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex Mercer — Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Distinctive font pairing: Space Mono (code/mono feel) + Outfit (clean modern) -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Waleed Munir</h1>
-            <div class="subtitle">Computer Science & Engineering @ HKUST</div>
-            <div class="badge">SIGHT Global Participant | Jiu-Jitsu Silver Medalist</div>
-        </div>
-        
-        <div class="content">
-            <section class="section">
-                <h2>About Me</h2>
-                <p style="font-size: 1.1em; line-height: 1.8;">
-                    Motivated Computer Science student at HKUST with a strong foundation in software development and 
-                    practical experience in Python programming. Proven ability to develop games and applications through 
-                    personal projects using PyGame and Unity. Passionate about using technology to solve real-world problems.
-                </p>
-            </section>
-            
-            <section class="section">
-                <h2>Contact</h2>
-                <div class="contact-grid">
-                    <div class="contact-item">
-                        <div>📧</div>
-                        <a href="mailto:waleedmunir1519@gmail.com">waleedmunir1519@gmail.com</a>
-                    </div>
-                    <div class="contact-item">
-                        <div>📱</div>
-                        <a href="tel:+85244806168">+852 4480 6168</a>
-                    </div>
-                    <div class="contact-item">
-                        <div>💻</div>
-                        <a href="https://github.com/Espartaneal" target="_blank">github.com/Espartaneal</a>
-                    </div>
-                    <div class="contact-item">
-                        <div>📍</div>
-                        <span>HKUST Hall III, Kowloon Bay</span>
-                    </div>
-                </div>
-            </section>
-            
-            <section class="section">
-                <h2>Skills</h2>
-                <div class="skills">
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">C</span>
-                    <span class="skill-tag">C#</span>
-                    <span class="skill-tag">Pandas</span>
-                    <span class="skill-tag">NumPy</span>
-                    <span class="skill-tag">scikit-learn</span>
-                    <span class="skill-tag">PyGame</span>
-                    <span class="skill-tag">Unity</span>
-                    <span class="skill-tag">Git</span>
-                    <span class="skill-tag">Excel</span>
-                </div>
-            </section>
-            
-            <section class="section">
-                <h2>Projects</h2>
-                
-                <div class="project-card">
-                    <h3>3D Unity Game</h3>
-                    <div class="project-tech">
-                        <span class="tech-badge">C#</span>
-                        <span class="tech-badge">Unity</span>
-                    </div>
-                    <p>Developed an immersive 3D game in Unity with custom mechanics, dynamic lighting, and intuitive UI.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/Espartaneal" target="_blank">View on GitHub →</a>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <h3>First-Person Shooter (FPS) Game</h3>
-                    <div class="project-tech">
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">PyGame</span>
-                    </div>
-                    <p>Co-developed a functional FPS game using PyGame library. Implemented player controls, enemy AI with behavior patterns, and collision detection systems.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/Espartaneal" target="_blank">View on GitHub →</a>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <h3>Weather Forecast Prediction Model</h3>
-                    <div class="project-tech">
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">scikit-learn</span>
-                        <span class="tech-badge">Pandas</span>
-                    </div>
-                    <p>Built a regression model using Ridge algorithm to predict weather patterns. Applied data preprocessing and feature engineering to improve accuracy.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/Espartaneal" target="_blank">View on GitHub →</a>
-                    </div>
-                </div>
-            </section>
-            
-            <section class="section">
-                <h2>Experience</h2>
-                
-                <div class="experience-item">
-                    <h3>IT and Data Management Assistant</h3>
-                    <div class="experience-date">Nissan I Morjan Sea Est. | 09/2023 - 08/2025</div>
-                    <ul style="margin-left: 20px;">
-                        <li>Managed and organized company datasets using Excel, ensuring data integrity</li>
-                        <li>Streamlined inventory processes using data management skills</li>
-                        <li>Acted as translator, eliminating language barriers to boost sales</li>
-                        <li>Translated technical documents between English and Urdu</li>
-                    </ul>
-                </div>
-                
-                <div class="experience-item">
-                    <h3>Substitute Teacher</h3>
-                    <div class="experience-date">Pakistan International School Riyadh | 09/2024 - 03/2025</div>
-                    <ul style="margin-left: 20px;">
-                        <li>Delivered lessons in English, Mathematics, and Computer Science</li>
-                        <li>Increased CS competition participation by 50%</li>
-                        <li>Enhanced presentation and team leadership skills</li>
-                    </ul>
-                </div>
-            </section>
-            
-            <section class="section">
-                <h2>Education & Achievements</h2>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px;">
-                    <div class="achievement-badge">🎓 HKUST CSE | 2029</div>
-                    <div class="achievement-badge">📚 A-Levels: A*A*AA</div>
-                    <div class="achievement-badge">📊 SAT: 1490 (770 Math)</div>
-                    <div class="achievement-badge">🏅 Jiu-Jitsu Silver Medalist</div>
-                    <div class="achievement-badge">🌍 SIGHT Global Participant</div>
-                    <div class="achievement-badge">📜 CS50x Harvard (edX)</div>
-                </div>
-            </section>
-            
-            <section class="section">
-                <h2>Languages</h2>
-                <div class="skills">
-                    <span class="skill-tag">English (Fluent)</span>
-                    <span class="skill-tag">Urdu (Native)</span>
-                    <span class="skill-tag">Punjabi (Native)</span>
-                    <span class="skill-tag">Hindi (Conversational)</span>
-                    <span class="skill-tag">Arabic (Basic)</span>
-                </div>
-            </section>
-        </div>
-        
-        <div class="footer">
-            <p>© 2025 Waleed Munir | Built with ❤️ for HKUST</p>
-        </div>
+ 
+  <!-- ============================================================
+       CUSTOM CURSOR
+  ============================================================ -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+ 
+  <!-- ============================================================
+       NOISE OVERLAY — adds subtle grain texture
+  ============================================================ -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+ 
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <!-- Logo / wordmark -->
+      <a href="#hero" class="nav-logo" aria-label="Home">
+        <span class="logo-bracket">[</span>
+        <span class="logo-text">AM</span>
+        <span class="logo-bracket">]</span>
+      </a>
+ 
+      <!-- Nav links -->
+      <ul class="nav-links" role="list">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+ 
+      <!-- CTA -->
+      <a href="#contact" class="nav-cta">
+        <span>Hire Me</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+ 
+      <!-- Mobile hamburger -->
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </nav>
+ 
+  <!-- Mobile menu overlay -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul role="list">
+      <li><a href="#about" class="mobile-link">About</a></li>
+      <li><a href="#skills" class="mobile-link">Skills</a></li>
+      <li><a href="#projects" class="mobile-link">Projects</a></li>
+      <li><a href="#experience" class="mobile-link">Experience</a></li>
+      <li><a href="#contact" class="mobile-link">Contact</a></li>
+    </ul>
+  </div>
+ 
+  <!-- ============================================================
+       HERO SECTION
+  ============================================================ -->
+  <section class="hero" id="hero" aria-label="Introduction">
+ 
+    <!-- Canvas for particle / star field background -->
+    <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+ 
+    <!-- Rotating globe (via D3) -->
+    <div class="globe-container" aria-hidden="true">
+      <canvas id="globeCanvas"></canvas>
+    </div>
+ 
+    <!-- Hero content -->
+    <div class="hero-content">
+      <!-- Eyebrow label -->
+      <p class="hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        Available for work
+      </p>
+ 
+      <!-- Headline with letter animation -->
+      <h1 class="hero-headline">
+        <span class="headline-line reveal-line">
+          <span class="headline-word">Alex</span>
+          <span class="headline-word accent">Mercer</span>
+        </span>
+        <span class="headline-line reveal-line">
+          <span class="headline-word dim">Software</span>
+          <span class="headline-word dim">Engineer</span>
+        </span>
+      </h1>
+ 
+      <!-- Typed / rotating descriptor -->
+      <p class="hero-descriptor">
+        <span class="descriptor-prefix">I build </span>
+        <span class="descriptor-rotating" id="rotatingText">scalable backends</span>
+        <span class="descriptor-cursor">_</span>
+      </p>
+ 
+      <!-- Hero CTA row -->
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">
+          View Projects
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+ 
+      <!-- Quick stats -->
+      <div class="hero-stats" role="list">
+        <div class="stat" role="listitem">
+          <span class="stat-number" data-target="6">0</span>
+          <span class="stat-unit">+</span>
+          <span class="stat-label">Years exp.</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat" role="listitem">
+          <span class="stat-number" data-target="40">0</span>
+          <span class="stat-unit">+</span>
+          <span class="stat-label">Projects</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat" role="listitem">
+          <span class="stat-number" data-target="12">0</span>
+          <span class="stat-unit">k+</span>
+          <span class="stat-label">GitHub stars</span>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator" aria-hidden="true">
+      <span class="scroll-label">Scroll</span>
+      <div class="scroll-line">
+        <div class="scroll-dot"></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ============================================================
+       ABOUT SECTION
+  ============================================================ -->
+  <section class="section about" id="about" aria-labelledby="about-heading">
+    <div class="container">
+ 
+      <!-- Section label -->
+      <div class="section-label" aria-hidden="true">
+        <span class="label-num">01</span>
+        <span class="label-line"></span>
+        <span class="label-text">About</span>
+      </div>
+ 
+      <div class="about-grid">
+        <!-- Left: text -->
+        <div class="about-text">
+          <h2 class="section-heading" id="about-heading">
+            Crafting digital<br/>
+            <span class="accent">experiences</span> that matter
+          </h2>
+          <p class="body-text">
+            I'm a full-stack software engineer with 6+ years of experience building
+            high-performance web applications and distributed systems. I thrive at the
+            intersection of engineering rigor and product thinking.
+          </p>
+          <p class="body-text">
+            My expertise spans from low-level performance optimization to architecting
+            cloud-native microservices. I'm passionate about open source, clean code,
+            and shipping things that actually work.
+          </p>
+ 
+          <!-- Highlight tags -->
+          <div class="about-tags">
+            <span class="tag">Open Source</span>
+            <span class="tag">System Design</span>
+            <span class="tag">DevOps</span>
+            <span class="tag">Performance</span>
+            <span class="tag">Mentorship</span>
+          </div>
+ 
+          <a href="#" class="btn btn-outline" download>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 2v8M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Download Resume
+          </a>
+        </div>
+ 
+        <!-- Right: image + floating badges -->
+        <div class="about-visual">
+          <div class="about-image-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=600&q=80"
+              alt="Alex Mercer at work"
+              class="about-img"
+              loading="lazy"
+            />
+            <!-- Decorative grid overlay -->
+            <div class="img-grid-overlay" aria-hidden="true"></div>
+          </div>
+ 
+          <!-- Floating info cards -->
+          <div class="float-card float-card--tl" aria-hidden="true">
+            <div class="float-card-icon">⚡</div>
+            <div>
+              <p class="float-card-num">99ms</p>
+              <p class="float-card-sub">Avg response</p>
+            </div>
+          </div>
+ 
+          <div class="float-card float-card--br" aria-hidden="true">
+            <div class="float-card-icon">🚀</div>
+            <div>
+              <p class="float-card-num">4.9★</p>
+              <p class="float-card-sub">Client rating</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ============================================================
+       SKILLS SECTION
+  ============================================================ -->
+  <section class="section skills" id="skills" aria-labelledby="skills-heading">
+    <div class="container">
+ 
+      <div class="section-label" aria-hidden="true">
+        <span class="label-num">02</span>
+        <span class="label-line"></span>
+        <span class="label-text">Skills</span>
+      </div>
+ 
+      <h2 class="section-heading" id="skills-heading">
+        My technical <span class="accent">arsenal</span>
+      </h2>
+ 
+      <!-- Skill categories -->
+      <div class="skills-grid">
+ 
+        <!-- Category: Frontend -->
+        <div class="skill-category reveal-up">
+          <div class="skill-cat-header">
+            <div class="skill-cat-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M7 8l-2 2 2 2M13 8l2 2-2 2M11 7l-2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 class="skill-cat-title">Frontend</h3>
+          </div>
+          <ul class="skill-list" role="list">
+            <li class="skill-item"><span class="skill-name">React / Next.js</span><div class="skill-bar"><div class="skill-fill" style="--pct: 95%"></div></div><span class="skill-pct">95</span></li>
+            <li class="skill-item"><span class="skill-name">TypeScript</span><div class="skill-bar"><div class="skill-fill" style="--pct: 90%"></div></div><span class="skill-pct">90</span></li>
+            <li class="skill-item"><span class="skill-name">Three.js / WebGL</span><div class="skill-bar"><div class="skill-fill" style="--pct: 75%"></div></div><span class="skill-pct">75</span></li>
+            <li class="skill-item"><span class="skill-name">CSS / Tailwind</span><div class="skill-bar"><div class="skill-fill" style="--pct: 92%"></div></div><span class="skill-pct">92</span></li>
+          </ul>
+        </div>
+ 
+        <!-- Category: Backend -->
+        <div class="skill-category reveal-up" style="--delay: 0.1s">
+          <div class="skill-cat-header">
+            <div class="skill-cat-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <rect x="2" y="2" width="16" height="5" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="2" y="9" width="16" height="5" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="16" cy="4.5" r="1" fill="currentColor"/>
+                <circle cx="16" cy="11.5" r="1" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3 class="skill-cat-title">Backend</h3>
+          </div>
+          <ul class="skill-list" role="list">
+            <li class="skill-item"><span class="skill-name">Node.js / Bun</span><div class="skill-bar"><div class="skill-fill" style="--pct: 93%"></div></div><span class="skill-pct">93</span></li>
+            <li class="skill-item"><span class="skill-name">Go</span><div class="skill-bar"><div class="skill-fill" style="--pct: 82%"></div></div><span class="skill-pct">82</span></li>
+            <li class="skill-item"><span class="skill-name">Python / FastAPI</span><div class="skill-bar"><div class="skill-fill" style="--pct: 88%"></div></div><span class="skill-pct">88</span></li>
+            <li class="skill-item"><span class="skill-name">GraphQL / REST</span><div class="skill-bar"><div class="skill-fill" style="--pct: 90%"></div></div><span class="skill-pct">90</span></li>
+          </ul>
+        </div>
+ 
+        <!-- Category: Infrastructure -->
+        <div class="skill-category reveal-up" style="--delay: 0.2s">
+          <div class="skill-cat-header">
+            <div class="skill-cat-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 2C5.58 2 2 4.24 2 7s3.58 5 8 5 8-2.24 8-5-3.58-5-8-5z" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M2 7v3c0 2.76 3.58 5 8 5s8-2.24 8-5V7" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M2 10v3c0 2.76 3.58 5 8 5s8-2.24 8-5v-3" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <h3 class="skill-cat-title">Infrastructure</h3>
+          </div>
+          <ul class="skill-list" role="list">
+            <li class="skill-item"><span class="skill-name">AWS / GCP</span><div class="skill-bar"><div class="skill-fill" style="--pct: 87%"></div></div><span class="skill-pct">87</span></li>
+            <li class="skill-item"><span class="skill-name">Docker / Kubernetes</span><div class="skill-bar"><div class="skill-fill" style="--pct: 84%"></div></div><span class="skill-pct">84</span></li>
+            <li class="skill-item"><span class="skill-name">Terraform / IaC</span><div class="skill-bar"><div class="skill-fill" style="--pct: 78%"></div></div><span class="skill-pct">78</span></li>
+            <li class="skill-item"><span class="skill-name">PostgreSQL / Redis</span><div class="skill-bar"><div class="skill-fill" style="--pct: 91%"></div></div><span class="skill-pct">91</span></li>
+          </ul>
+        </div>
+ 
+      </div>
+ 
+      <!-- Tech logos ticker -->
+      <div class="ticker-wrap" aria-label="Technologies I use">
+        <div class="ticker-track">
+          <!-- Two copies for seamless loop -->
+          <div class="ticker-items">
+            <span class="ticker-item">React</span>
+            <span class="ticker-sep" aria-hidden="true">·</span>
+            <span class="ticker-item">TypeScript</span>
+            <span class="ticker-sep" aria-hidden="true">·</span>
+            <span class="ticker-item">Node.js</span>
+            <span class="ticker-sep" aria-hidden="true">·</span>
+            <span class="ticker-item">Go</span>
+            <span class="ticker-sep" aria-hidden="true">·</span>
+            <span class="ticker-item">Python</span>
+            <span class="ticker-sep" aria-hidden="true">·</span>
+            <span class="ticker-item">Kubernetes</span>
+            <span class="ticker-sep" aria-hidden="true">·</span>
+            <span class="ticker-item">AWS</span>
+            <span class="ticker-sep" aria-hidden="true">·</span>
+            <span class="ticker-item">PostgreSQL</span>
+            <span class="ticker-sep" aria-hidden="true">·</span>
+            <span class="ticker-item">Redis</span>
+            <span class="ticker-sep" aria-hidden="true">·</span>
+            <span class="ticker-item">Next.js</span>
+            <span class="ticker-sep" aria-hidden="true">·</span>
+            <span class="ticker-item">GraphQL</span>
+            <span class="ticker-sep" aria-hidden="true">·</span>
+            <span class="ticker-item">Docker</span>
+            <span class="ticker-sep" aria-hidden="true">·</span>
+          </div>
+          <!-- Duplicate for infinite scroll -->
+          <div class="ticker-items" aria-hidden="true">
+            <span class="ticker-item">React</span>
+            <span class="ticker-sep">·</span>
+            <span class="ticker-item">TypeScript</span>
+            <span class="ticker-sep">·</span>
+            <span class="ticker-item">Node.js</span>
+            <span class="ticker-sep">·</span>
+            <span class="ticker-item">Go</span>
+            <span class="ticker-sep">·</span>
+            <span class="ticker-item">Python</span>
+            <span class="ticker-sep">·</span>
+            <span class="ticker-item">Kubernetes</span>
+            <span class="ticker-sep">·</span>
+            <span class="ticker-item">AWS</span>
+            <span class="ticker-sep">·</span>
+            <span class="ticker-item">PostgreSQL</span>
+            <span class="ticker-sep">·</span>
+            <span class="ticker-item">Redis</span>
+            <span class="ticker-sep">·</span>
+            <span class="ticker-item">Next.js</span>
+            <span class="ticker-sep">·</span>
+            <span class="ticker-item">GraphQL</span>
+            <span class="ticker-sep">·</span>
+            <span class="ticker-item">Docker</span>
+            <span class="ticker-sep">·</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ============================================================
+       PROJECTS SECTION
+  ============================================================ -->
+  <section class="section projects" id="projects" aria-labelledby="projects-heading">
+    <div class="container">
+ 
+      <div class="section-label" aria-hidden="true">
+        <span class="label-num">03</span>
+        <span class="label-line"></span>
+        <span class="label-text">Projects</span>
+      </div>
+ 
+      <div class="projects-header">
+        <h2 class="section-heading" id="projects-heading">
+          Featured <span class="accent">work</span>
+        </h2>
+        <!-- Filter tabs -->
+        <div class="project-filters" role="tablist" aria-label="Filter projects">
+          <button class="filter-btn active" role="tab" aria-selected="true" data-filter="all">All</button>
+          <button class="filter-btn" role="tab" aria-selected="false" data-filter="fullstack">Full Stack</button>
+          <button class="filter-btn" role="tab" aria-selected="false" data-filter="backend">Backend</button>
+          <button class="filter-btn" role="tab" aria-selected="false" data-filter="oss">Open Source</button>
+        </div>
+      </div>
+ 
+      <!-- Project cards grid -->
+      <div class="projects-grid" id="projectsGrid">
+ 
+        <!-- Project 1 — featured (spans 2 cols) -->
+        <article class="project-card project-card--featured" data-category="fullstack" aria-label="NovaBench project">
+          <div class="project-card-media">
+            <img
+              src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80"
+              alt="NovaBench dashboard screenshot"
+              loading="lazy"
+            />
+            <div class="project-overlay">
+              <div class="project-links">
+                <a href="#" class="project-link" aria-label="View NovaBench on GitHub">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                  GitHub
+                </a>
+                <a href="#" class="project-link" aria-label="View live NovaBench demo">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                  Live Demo
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-meta">
+              <span class="project-category">Full Stack</span>
+              <span class="project-year">2024</span>
+            </div>
+            <h3 class="project-title">NovaBench</h3>
+            <p class="project-desc">A distributed API load-testing platform processing 10M+ requests/day. Features real-time dashboards, anomaly detection, and auto-scaling test runners across multiple regions.</p>
+            <div class="project-stack">
+              <span class="stack-badge">Go</span>
+              <span class="stack-badge">React</span>
+              <span class="stack-badge">Kafka</span>
+              <span class="stack-badge">TimescaleDB</span>
+              <span class="stack-badge">Kubernetes</span>
+            </div>
+          </div>
+        </article>
+ 
+        <!-- Project 2 -->
+        <article class="project-card" data-category="backend" aria-label="Orion Cache project">
+          <div class="project-card-media">
+            <img
+              src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80"
+              alt="Orion Cache architecture diagram"
+              loading="lazy"
+            />
+            <div class="project-overlay">
+              <div class="project-links">
+                <a href="#" class="project-link" aria-label="View Orion Cache on GitHub">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-meta">
+              <span class="project-category">Backend</span>
+              <span class="project-year">2023</span>
+            </div>
+            <h3 class="project-title">Orion Cache</h3>
+            <p class="project-desc">An in-memory caching layer with consistent hashing, LRU eviction, and sub-millisecond latency. Open-sourced with 3k+ GitHub stars.</p>
+            <div class="project-stack">
+              <span class="stack-badge">Go</span>
+              <span class="stack-badge">gRPC</span>
+              <span class="stack-badge">Raft</span>
+            </div>
+          </div>
+        </article>
+ 
+        <!-- Project 3 -->
+        <article class="project-card" data-category="fullstack" aria-label="Prism Analytics project">
+          <div class="project-card-media">
+            <img
+              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+              alt="Prism Analytics dashboard"
+              loading="lazy"
+            />
+            <div class="project-overlay">
+              <div class="project-links">
+                <a href="#" class="project-link" aria-label="Live demo">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                  Live Demo
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-meta">
+              <span class="project-category">Full Stack</span>
+              <span class="project-year">2024</span>
+            </div>
+            <h3 class="project-title">Prism Analytics</h3>
+            <p class="project-desc">Privacy-first web analytics platform. No cookies, GDPR compliant, with funnel visualization and real-time visitor tracking.</p>
+            <div class="project-stack">
+              <span class="stack-badge">Next.js</span>
+              <span class="stack-badge">ClickHouse</span>
+              <span class="stack-badge">Rust</span>
+            </div>
+          </div>
+        </article>
+ 
+        <!-- Project 4 -->
+        <article class="project-card" data-category="oss" aria-label="FlowQL open source project">
+          <div class="project-card-media">
+            <img
+              src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80"
+              alt="FlowQL code editor"
+              loading="lazy"
+            />
+            <div class="project-overlay">
+              <div class="project-links">
+                <a href="#" class="project-link" aria-label="View FlowQL on GitHub">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-meta">
+              <span class="project-category">Open Source</span>
+              <span class="project-year">2023</span>
+            </div>
+            <h3 class="project-title">FlowQL</h3>
+            <p class="project-desc">A type-safe query builder for TypeScript with zero runtime overhead. 8k+ npm downloads/week.</p>
+            <div class="project-stack">
+              <span class="stack-badge">TypeScript</span>
+              <span class="stack-badge">SQL</span>
+            </div>
+          </div>
+        </article>
+ 
+      </div>
+ 
+      <!-- "More on GitHub" link -->
+      <div class="projects-footer">
+        <a href="#" class="btn btn-ghost">
+          View all projects on GitHub
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ============================================================
+       EXPERIENCE SECTION — Vertical timeline
+  ============================================================ -->
+  <section class="section experience" id="experience" aria-labelledby="experience-heading">
+    <div class="container">
+ 
+      <div class="section-label" aria-hidden="true">
+        <span class="label-num">04</span>
+        <span class="label-line"></span>
+        <span class="label-text">Experience</span>
+      </div>
+ 
+      <h2 class="section-heading" id="experience-heading">
+        Career <span class="accent">timeline</span>
+      </h2>
+ 
+      <!-- Timeline -->
+      <div class="timeline" role="list">
+ 
+        <div class="timeline-item reveal-up" role="listitem">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Senior Software Engineer</h3>
+                <p class="timeline-company">
+                  <a href="#" class="company-link">Vercel Inc.</a>
+                </p>
+              </div>
+              <div class="timeline-period">
+                <span class="period-badge">2022 — Present</span>
+              </div>
+            </div>
+            <p class="timeline-desc">
+              Led the core infrastructure team responsible for the edge network serving 100B+ requests/month.
+              Reduced cold-start latency by 40% and improved build pipeline throughput by 3×.
+            </p>
+            <div class="timeline-tags">
+              <span class="tag tag--sm">Go</span>
+              <span class="tag tag--sm">Rust</span>
+              <span class="tag tag--sm">Kubernetes</span>
+              <span class="tag tag--sm">Edge Computing</span>
+            </div>
+          </div>
+        </div>
+ 
+        <div class="timeline-item reveal-up" style="--delay: 0.1s" role="listitem">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Software Engineer II</h3>
+                <p class="timeline-company">
+                  <a href="#" class="company-link">Stripe</a>
+                </p>
+              </div>
+              <div class="timeline-period">
+                <span class="period-badge">2020 — 2022</span>
+              </div>
+            </div>
+            <p class="timeline-desc">
+              Built and maintained fraud detection microservices processing $1T+ in annual payment volume.
+              Contributed to the Stripe JS SDK and internal developer tooling.
+            </p>
+            <div class="timeline-tags">
+              <span class="tag tag--sm">Node.js</span>
+              <span class="tag tag--sm">Python</span>
+              <span class="tag tag--sm">ML Pipelines</span>
+            </div>
+          </div>
+        </div>
+ 
+        <div class="timeline-item reveal-up" style="--delay: 0.2s" role="listitem">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <div>
+                <h3 class="timeline-role">Full Stack Developer</h3>
+                <p class="timeline-company">
+                  <a href="#" class="company-link">Atlassian</a>
+                </p>
+              </div>
+              <div class="timeline-period">
+                <span class="period-badge">2018 — 2020</span>
+              </div>
+            </div>
+            <p class="timeline-desc">
+              Developed features for Jira's issue tracking core and led migration of legacy jQuery codebase
+              to a modern React architecture across 30+ components.
+            </p>
+            <div class="timeline-tags">
+              <span class="tag tag--sm">React</span>
+              <span class="tag tag--sm">Java</span>
+              <span class="tag tag--sm">PostgreSQL</span>
+            </div>
+          </div>
+        </div>
+ 
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ============================================================
+       CONTACT SECTION
+  ============================================================ -->
+  <section class="section contact" id="contact" aria-labelledby="contact-heading">
+    <div class="container">
+ 
+      <div class="section-label" aria-hidden="true">
+        <span class="label-num">05</span>
+        <span class="label-line"></span>
+        <span class="label-text">Contact</span>
+      </div>
+ 
+      <div class="contact-grid">
+        <!-- Left: big CTA text -->
+        <div class="contact-text">
+          <h2 class="contact-heading" id="contact-heading">
+            Let's build<br/>
+            something<br/>
+            <span class="accent">great together</span>
+          </h2>
+          <p class="body-text">
+            Open to full-time roles, freelance projects, and interesting conversations.
+            Response time: usually within 24 hours.
+          </p>
+ 
+          <!-- Social links -->
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="GitHub profile">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              GitHub
+            </a>
+            <a href="#" class="social-link" aria-label="LinkedIn profile">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter/X profile">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              X (Twitter)
+            </a>
+          </div>
+        </div>
+ 
+        <!-- Right: contact form -->
+        <form class="contact-form" id="contactForm" novalidate aria-label="Contact form">
+          <div class="form-group">
+            <label class="form-label" for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-input"
+              placeholder="Your name"
+              autocomplete="name"
+              required
+            />
+            <span class="form-error" role="alert" aria-live="polite"></span>
+          </div>
+ 
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-input"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            />
+            <span class="form-error" role="alert" aria-live="polite"></span>
+          </div>
+ 
+          <div class="form-group">
+            <label class="form-label" for="subject">Subject</label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              class="form-input"
+              placeholder="What's this about?"
+              required
+            />
+            <span class="form-error" role="alert" aria-live="polite"></span>
+          </div>
+ 
+          <div class="form-group">
+            <label class="form-label" for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              class="form-input form-textarea"
+              placeholder="Tell me about your project..."
+              rows="5"
+              required
+            ></textarea>
+            <span class="form-error" role="alert" aria-live="polite"></span>
+          </div>
+ 
+          <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
+            <span class="btn-label">Send Message</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+ 
+          <!-- Success state -->
+          <div class="form-success" id="formSuccess" aria-live="polite" hidden>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 10l2.5 2.5 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Message sent! I'll get back to you within 24 hours.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <p class="footer-copy">
+          © 2025 Alex Mercer. Built with
+          <span class="footer-heart" aria-label="love">♥</span>
+          and way too much coffee.
+        </p>
+        <p class="footer-stack">
+          <span class="mono">HTML · CSS · JS · D3.js</span>
+        </p>
+        <a href="#hero" class="back-to-top" aria-label="Back to top">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 15V5M5 10l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+ 
+  <!-- D3 for globe rendering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <!-- Main JS -->
+  <script src="main.js"></script>
 </body>
 </html>
