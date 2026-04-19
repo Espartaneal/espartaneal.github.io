@@ -1,20 +1,20 @@
 # espartaneal.github.io
-# 👋 Hi, I'm Waleed Munir
+#  Hi, I'm Waleed Munir
 
 <div align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=2C96F7&center=true&vCenter=true&width=435&lines=Computer+Science+%40+HKUST;Game+Developer;Data+Enthusiast;Problem+Solver" alt="Typing SVG" />
 </div>
 
-## 🚀 About Me
+##  About Me
 
 I'm a first-year Computer Science & Engineering student at **HKUST** passionate about building technology that makes a difference. From developing games to creating data-driven solutions, I love turning ideas into reality through code.
 
-- 🎓 **HKUST CSE** | Year 1 | Expected Graduation 2029
-- 🌟 **SIGHT Global Participant** | Designing tech solutions for underprivileged communities
-- 🏆 **Jiu-Jitsu International Silver Medalist** | Discipline meets code
-- 💡 **SAT 1490** (770 Math) | 4.0 GPA | A\*A\*AA in A-Levels
+-  **HKUST CSE** | Year 1 | Expected Graduation 2029
+- **SIGHT Global Participant** | Designing tech solutions for underprivileged communities
+-  **Jiu-Jitsu International Silver Medalist** | Discipline meets code
+-  **SAT 1490** (770 Math) | 4.0 GPA | A\*A\*AA in A-Levels
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 <div align="center">
 
@@ -47,15 +47,15 @@ I'm a first-year Computer Science & Engineering student at **HKUST** passionate 
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=Espartaneal&theme=tokyonight" alt="GitHub Streak" />
 </div>
 
-## 🚀 Featured Projects
+## Featured Projects
 
-### 🎮 [3D Unity Game](https://github.com/Espartaneal/unity-3d-game)
+###  [3D Unity Game](https://github.com/Espartaneal/unity-3d-game)
 > C#, Unity
 - Developed an immersive 3D game with custom mechanics and dynamic lighting
 - Implemented intuitive UI and smooth player controls
 - *[Coming Soon - Work in Progress]*
 
-### 🔫 [FPS Game with PyGame](https://github.com/Espartaneal/pygame-fps)
+###  [FPS Game with PyGame](https://github.com/Espartaneal/pygame-fps)
 > Python, PyGame
 - Co-developed a functional First-Person Shooter game
 - Implemented enemy AI with behavior patterns
