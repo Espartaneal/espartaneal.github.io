@@ -405,7 +405,7 @@ body:has(button:hover) .cursor-follower {
   position: absolute;
   inset: 0;
   width: 100%; height: 100%;
-  z-index: 0;
+  z-index: 0;   /* bottommost: particle field */
 }
 
 /* Globe positioned to the right */
@@ -416,7 +416,7 @@ body:has(button:hover) .cursor-follower {
   transform: translateY(-50%);
   width: clamp(400px, 55vw, 750px);
   aspect-ratio: 1;
-  z-index: 1;
+  z-index: 2;   /* above paths layer */
   opacity: 0.55;
   pointer-events: none; /* so hero text is always interactive */
 }
@@ -425,10 +425,10 @@ body:has(button:hover) .cursor-follower {
   height: 100% !important;
 }
 
-/* Hero content overlays canvas */
+/* Hero content overlays everything */
 .hero-content {
   position: relative;
-  z-index: 2;
+  z-index: 3;   /* topmost */
   max-width: 620px;
 }
 
@@ -551,8 +551,7 @@ body:has(button:hover) .cursor-follower {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  z-index: 2;
-  opacity: 0;
+  z-index: 3;
   animation: fadeIn 0.8s 1.5s ease forwards;
 }
 .scroll-label {
@@ -1300,4 +1299,330 @@ body:has(button:hover) .cursor-follower {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
   .ticker-track { animation: none; }
+}
+
+/* ---------------------------------------------------------------
+   19. 3D SCROLL CONTAINER SECTION
+   Pure-CSS / pure-JS recreation of the Framer Motion
+   ContainerScroll component. The sentinel div is tall enough to
+   give the scroll driver room to interpolate; the inner content
+   is sticky-positioned so it stays in view while the user scrolls.
+--------------------------------------------------------------- */
+
+/* Outer section — tall so scroll has distance to travel */
+.scroll-container-section {
+  position: relative;
+  /* 160vh on desktop, 130vh on mobile (mirrors the h-[60rem] md:h-[80rem]) */
+  height: 160vh;
+  background: var(--bg-base);
+  overflow: hidden; /* clip the card shadow bleed */
+}
+
+/* Sentinel fills the section height */
+.sc-sentinel {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Perspective wrapper — enables the 3-D transform space */
+.sc-perspective-wrap {
+  perspective: 1000px;
+  width: 100%;
+  max-width: 900px;
+  padding: 2rem 1.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---- Header ---- */
+.sc-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  /* JS writes transform: translateY(Xpx) */
+  will-change: transform;
+}
+
+.sc-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.sc-eyebrow-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s infinite;
+}
+
+.sc-title {
+  font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+
+.sc-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+/* ---- 3-D Card ---- */
+.sc-card {
+  width: 100%;
+  /* JS writes rotateX, scale transforms here */
+  will-change: transform;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  border-radius: 24px;
+  border: 3px solid #3a3a3a;
+  background: #1a1a1a;
+  padding: 6px;
+  /* Match the Framer component's layered box-shadow */
+  box-shadow:
+    0 0 #0000004d,
+    0 9px 20px #0000004a,
+    0 37px 37px #00000042,
+    0 84px 50px #00000026,
+    0 149px 60px #0000000a,
+    0 233px 65px #00000003;
+}
+
+.sc-card-inner {
+  border-radius: 18px;
+  overflow: hidden;
+  background: #111;
+  height: clamp(320px, 45vw, 520px);
+}
+
+/* ---- Dashboard layout inside the card ---- */
+.sc-dashboard {
+  display: flex;
+  height: 100%;
+  font-family: var(--font-display);
+}
+
+/* Sidebar */
+.sc-sidebar {
+  width: 52px;
+  background: #0d1117;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.sc-sidebar-logo {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.sc-nav-icons { display: flex; flex-direction: column; gap: 0.35rem; }
+.sc-nav-icon {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+  color: var(--text-muted);
+  transition: background 0.2s, color 0.2s;
+}
+.sc-nav-icon--active {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+/* Main area */
+.sc-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #0d1117;
+}
+
+/* Top bar */
+.sc-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  flex-shrink: 0;
+}
+.sc-page-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.sc-topbar-actions { display: flex; align-items: center; gap: 0.5rem; }
+.sc-search-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 6px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+.sc-avatar {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  border: 1px solid var(--border-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* KPI row */
+.sc-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  flex-shrink: 0;
+}
+.sc-kpi {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 0.55rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.sc-kpi-label {
+  font-size: 0.58rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+.sc-kpi-value {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.sc-kpi-delta { font-size: 0.58rem; font-weight: 600; }
+.sc-kpi-delta--up   { color: #4ade80; }
+.sc-kpi-delta--down { color: #f87171; }
+
+/* Content row: chart + activity */
+.sc-content-row {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.sc-chart-card,
+.sc-activity-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.sc-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+.sc-chart-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.sc-chart-period {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--text-muted);
+}
+
+.sc-sparkline {
+  flex: 1;
+  width: 100%;
+  overflow: visible;
+}
+
+/* Activity list */
+.sc-activity-list { display: flex; flex-direction: column; gap: 0.4rem; }
+.sc-activity-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.62rem;
+}
+.sc-activity-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.sc-activity-dot--green { background: #4ade80; box-shadow: 0 0 6px #4ade8066; }
+.sc-activity-dot--amber { background: #fbbf24; box-shadow: 0 0 6px #fbbf2466; }
+.sc-activity-text { flex: 1; color: var(--text-secondary); }
+.sc-activity-time { color: var(--text-muted); white-space: nowrap; }
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .scroll-container-section { height: 130vh; }
+  .sc-kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .sc-content-row { grid-template-columns: 1fr; }
+  .sc-activity-card { display: none; } /* hide on very small screens */
+}
+
+/* ---------------------------------------------------------------
+   20. BACKGROUND PATHS ANIMATION
+   Recreates FloatingPaths from the Framer Motion component.
+   Two mirrored SVG layers fill the hero; each path runs a
+   stroke-dashoffset animation (WAAPI) to simulate flowing motion.
+--------------------------------------------------------------- */
+
+/* Container sits between the particle canvas and the hero content */
+.bg-paths {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;        /* above particle canvas (z:0), below globe (z:2) and content (z:3) */
+  overflow: hidden;
+}
+
+.bg-paths-svg {
+  width: 100%;
+  height: 100%;
+  /* Fill the full hero, not just the SVG viewBox aspect ratio */
+  preserveAspectRatio: none;
+}
+
+/* Each animated path — JS adds these via createElement */
+.bp-path {
+  fill: none;
+  stroke: var(--accent);      /* cyan, overridden per-path by JS opacity */
+  /* stroke-dasharray and stroke-dashoffset set by JS */
+  will-change: stroke-dashoffset;
 }
