@@ -640,3 +640,193 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     globe.style.transform = `translateY(calc(-50% + ${y * 0.12}px))`;
   }, 16), { passive: true });
 })();
+
+/* ================================================================
+   14. 3D SCROLL CONTAINER ANIMATION
+   Mirrors the Framer Motion ContainerScroll component logic:
+   - Reads scrollYProgress through the sentinel section
+   - Maps [0 → 1] scroll progress to:
+       rotateX: 20deg → 0deg   (card tilts flat)
+       scale:   1.05  → 1.00   (card shrinks slightly)
+       translateY of header: 0 → -100px
+   Uses requestAnimationFrame for silky 60fps updates.
+================================================================ */
+(function initScrollContainer() {
+  const section  = document.getElementById('scrollShowcase');
+  const card     = document.getElementById('scCard');
+  const header   = document.getElementById('scHeader');
+  if (!section || !card || !header) return;
+
+  const isMobile = () => window.innerWidth <= 768;
+
+  /**
+   * Linear map: input value `t` in [inMin, inMax] → [outMin, outMax]
+   * Clamped at both ends.
+   */
+  function mapRange(t, inMin, inMax, outMin, outMax) {
+    const clamped = Math.max(inMin, Math.min(inMax, t));
+    return outMin + ((clamped - inMin) / (inMax - inMin)) * (outMax - outMin);
+  }
+
+  function update() {
+    const rect        = section.getBoundingClientRect();
+    const sectionH    = section.offsetHeight;
+    const viewH       = window.innerHeight;
+
+    // scrollYProgress: 0 when section top hits viewport top,
+    //                  1 when section bottom hits viewport bottom
+    const scrolled    = -rect.top;                       // px scrolled into section
+    const scrollRange = sectionH - viewH;                // total scrollable distance
+    const progress    = Math.max(0, Math.min(1, scrolled / scrollRange));
+
+    // --- Card ---
+    const rotateX = mapRange(progress, 0, 1, 20, 0);     // 20° → 0°
+    const scaleRange = isMobile() ? [0.7, 0.9] : [1.05, 1.0];
+    const scale   = mapRange(progress, 0, 1, scaleRange[0], scaleRange[1]);
+
+    card.style.transform = `rotateX(${rotateX}deg) scale(${scale})`;
+
+    // --- Header translate ---
+    const translateY = mapRange(progress, 0, 1, 0, -100);  // 0 → -100px
+    header.style.transform = `translateY(${translateY}px)`;
+  }
+
+  // Run on every scroll event (throttled to rAF cadence)
+  let rafQueued = false;
+  window.addEventListener('scroll', () => {
+    if (!rafQueued) {
+      rafQueued = true;
+      requestAnimationFrame(() => { update(); rafQueued = false; });
+    }
+  }, { passive: true });
+
+  // Also run on resize (isMobile changes scale range)
+  window.addEventListener('resize', throttle(update, 150));
+
+  // Initial paint
+  update();
+})();
+
+/* ================================================================
+   15. BACKGROUND PATHS ANIMATION
+   Faithful recreation of the Framer Motion FloatingPaths component.
+
+   The original component generates 36 paths per "position" value
+   (+1 and -1), using this formula for each path i:
+     d = `M-${380 - i*5*pos} -${189 + i*6}
+          C-${380 - i*5*pos} -${189 + i*6}
+            -${312 - i*5*pos} ${216 - i*6}
+            ${152 - i*5*pos} ${343 - i*6}
+          C${616 - i*5*pos} ${470 - i*6}
+            ${684 - i*5*pos} ${875 - i*6}
+            ${684 - i*5*pos} ${875 - i*6}`
+
+   Framer animates:
+     - pathLength: 0.3 → 1 (stroke-dasharray trick)
+     - opacity: 0.3 → 0.6 → 0.3 (pulse)
+     - pathOffset: 0 → 1 → 0 (flowing motion along the path)
+     duration: 20–30s, repeat infinite, ease linear
+
+   We replicate this using the Web Animations API (WAAPI)
+   which is supported in all modern browsers.
+================================================================ */
+(function initBackgroundPaths() {
+  const group = document.getElementById('bgPathsGroup');
+  if (!group) return;
+
+  const NUM_PATHS   = 36;    // paths per position set
+  const POSITIONS   = [1, -1]; // two mirrored sets
+
+  /**
+   * Build the cubic-bezier path string for path index i and
+   * position multiplier pos — exact port of the React formula.
+   */
+  function buildPathD(i, pos) {
+    const a = 380 - i * 5 * pos;
+    const b = 189 + i * 6;
+    const c = 312 - i * 5 * pos;
+    const d = 216 - i * 6;
+    const e = 152 - i * 5 * pos;
+    const f = 343 - i * 6;
+    const g = 616 - i * 5 * pos;
+    const h = 470 - i * 6;
+    const j = 684 - i * 5 * pos;
+    const k = 875 - i * 6;
+    return `M-${a} -${b} C-${a} -${b} -${c} ${d} ${e} ${f} C${g} ${h} ${j} ${k} ${j} ${k}`;
+  }
+
+  /**
+   * Approximate the total arc length of a cubic bezier curve
+   * by sampling it at N points and summing chord lengths.
+   * This lets us set correct stroke-dasharray values.
+   */
+  function approxPathLength(d, samples = 80) {
+    // Create a temporary SVG path to measure
+    const tmp = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    tmp.setAttribute('d', d);
+    // Append temporarily to get getTotalLength()
+    document.body.appendChild(tmp);
+    const len = tmp.getTotalLength();
+    document.body.removeChild(tmp);
+    return len;
+  }
+
+  // Build and animate all paths
+  POSITIONS.forEach(pos => {
+    for (let i = 0; i < NUM_PATHS; i++) {
+      const d       = buildPathD(i, pos);
+      const opacity = 0.1 + i * 0.03;    // matches strokeOpacity in original
+      const width   = 0.5 + i * 0.03;    // matches strokeWidth in original
+
+      // Create SVG path element
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('stroke', 'currentColor');
+      path.setAttribute('stroke-width', String(width));
+      path.setAttribute('fill', 'none');
+      path.classList.add('bp-path');
+
+      group.appendChild(path);
+
+      // Measure the path's total length for dash calculations
+      const totalLen = path.getTotalLength();
+      if (!totalLen || totalLen === 0) continue;
+
+      // pathLength in Framer: 0.3 → 1
+      // We represent this as stroke-dasharray: [visibleLen, totalLen]
+      // pathOffset: 0 → 1 → 0 maps to stroke-dashoffset travelling totalLen
+      const visibleLen = totalLen * 0.3;  // initial "pathLength: 0.3"
+
+      // Set up dash — dasharray = [visible segment, gap]
+      path.style.strokeDasharray  = `${visibleLen} ${totalLen}`;
+      path.style.strokeDashoffset = `${totalLen}`;  // start hidden
+
+      // Duration: 20–30s with deterministic variation per path
+      const duration = (20 + (i * 7 + (pos === 1 ? 0 : 13)) % 11) * 1000;
+
+      // ---- WAAPI animation ----
+      // Phase 1: dash flows along the path (stroke-dashoffset: totalLen → 0 → -totalLen)
+      // Phase 2: opacity pulses 0.3 → 0.6 → 0.3
+      // Both run simultaneously, looped infinitely.
+
+      path.animate(
+        [
+          { strokeDashoffset: totalLen,      opacity: opacity * 0.5 },
+          { strokeDashoffset: 0,             opacity: opacity,       offset: 0.5 },
+          { strokeDashoffset: -totalLen,     opacity: opacity * 0.5 },
+        ],
+        {
+          duration,
+          iterations: Infinity,
+          easing: 'linear',
+          delay: -(duration * (i / NUM_PATHS)),  // stagger start so they're not in sync
+        }
+      );
+    }
+  });
+
+  // The SVG uses currentColor — make the hero text colour drive the stroke
+  // In dark mode hero the text is white; we want cyan tones, so override:
+  const svg = document.querySelector('.bg-paths-svg');
+  if (svg) svg.style.color = 'rgba(0, 229, 255, 1)';
+})();
