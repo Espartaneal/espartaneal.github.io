@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alex Mercer — Software Engineer</title>
+  <title>Waleed — Software Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Distinctive font pairing: Space Mono (code/mono feel) + Outfit (clean modern) -->
@@ -12,18 +11,18 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
- 
+
   <!-- ============================================================
        CUSTOM CURSOR
   ============================================================ -->
   <div class="cursor" id="cursor"></div>
   <div class="cursor-follower" id="cursorFollower"></div>
- 
+
   <!-- ============================================================
        NOISE OVERLAY — adds subtle grain texture
   ============================================================ -->
   <div class="noise-overlay" aria-hidden="true"></div>
- 
+
   <!-- ============================================================
        NAVIGATION
   ============================================================ -->
@@ -32,10 +31,10 @@
       <!-- Logo / wordmark -->
       <a href="#hero" class="nav-logo" aria-label="Home">
         <span class="logo-bracket">[</span>
-        <span class="logo-text">AM</span>
+        <span class="logo-text">W</span>
         <span class="logo-bracket">]</span>
       </a>
- 
+
       <!-- Nav links -->
       <ul class="nav-links" role="list">
         <li><a href="#about" class="nav-link">About</a></li>
@@ -44,7 +43,7 @@
         <li><a href="#experience" class="nav-link">Experience</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
- 
+
       <!-- CTA -->
       <a href="#contact" class="nav-cta">
         <span>Hire Me</span>
@@ -52,14 +51,14 @@
           <path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
- 
+
       <!-- Mobile hamburger -->
       <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
- 
+
   <!-- Mobile menu overlay -->
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <ul role="list">
@@ -70,20 +69,35 @@
       <li><a href="#contact" class="mobile-link">Contact</a></li>
     </ul>
   </div>
- 
+
   <!-- ============================================================
        HERO SECTION
   ============================================================ -->
   <section class="hero" id="hero" aria-label="Introduction">
- 
+
     <!-- Canvas for particle / star field background -->
     <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
- 
+
+    <!-- ============================================================
+         BACKGROUND PATHS ANIMATION
+         Two mirrored sets of 36 SVG paths (position +1 and -1)
+         that animate their stroke-dashoffset to simulate flowing
+         motion — a vanilla JS/CSS recreation of the Framer Motion
+         FloatingPaths / BackgroundPaths component.
+    ============================================================ -->
+    <div class="bg-paths" id="bgPaths" aria-hidden="true">
+      <svg class="bg-paths-svg" viewBox="0 0 696 316" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <title>Background Paths</title>
+        <!-- JS renders paths into #bgPathsGroup -->
+        <g id="bgPathsGroup"></g>
+      </svg>
+    </div>
+
     <!-- Rotating globe (via D3) -->
     <div class="globe-container" aria-hidden="true">
       <canvas id="globeCanvas"></canvas>
     </div>
- 
+
     <!-- Hero content -->
     <div class="hero-content">
       <!-- Eyebrow label -->
@@ -91,26 +105,26 @@
         <span class="eyebrow-dot"></span>
         Available for work
       </p>
- 
+
       <!-- Headline with letter animation -->
       <h1 class="hero-headline">
         <span class="headline-line reveal-line">
-          <span class="headline-word">Alex</span>
-          <span class="headline-word accent">Mercer</span>
+          <span class="headline-word">Waleed</span>
+          <span class="headline-word accent">.</span>
         </span>
         <span class="headline-line reveal-line">
           <span class="headline-word dim">Software</span>
           <span class="headline-word dim">Engineer</span>
         </span>
       </h1>
- 
+
       <!-- Typed / rotating descriptor -->
       <p class="hero-descriptor">
         <span class="descriptor-prefix">I build </span>
         <span class="descriptor-rotating" id="rotatingText">scalable backends</span>
         <span class="descriptor-cursor">_</span>
       </p>
- 
+
       <!-- Hero CTA row -->
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">
@@ -121,7 +135,7 @@
         </a>
         <a href="#contact" class="btn btn-ghost">Get in touch</a>
       </div>
- 
+
       <!-- Quick stats -->
       <div class="hero-stats" role="list">
         <div class="stat" role="listitem">
@@ -143,7 +157,7 @@
         </div>
       </div>
     </div>
- 
+
     <!-- Scroll indicator -->
     <div class="scroll-indicator" aria-hidden="true">
       <span class="scroll-label">Scroll</span>
@@ -152,20 +166,133 @@
       </div>
     </div>
   </section>
- 
+
+  <!-- ============================================================
+       3D SCROLL CONTAINER SECTION
+       Scroll-driven perspective tilt: as the user scrolls through
+       this pinned section the card rotates from rotateX(20deg) to
+       rotateX(0deg) and scales 1.05 → 1, while the header translates
+       upward — a pure-JS recreation of the Framer Motion
+       ContainerScroll component.
+  ============================================================ -->
+  <section class="scroll-container-section" id="scrollShowcase" aria-label="Dashboard preview">
+    <div class="sc-sentinel" id="scSentinel">
+      <div class="sc-perspective-wrap">
+
+        <!-- Title that translates upward as you scroll -->
+        <div class="sc-header" id="scHeader">
+          <p class="sc-eyebrow">
+            <span class="sc-eyebrow-dot" aria-hidden="true"></span>
+            Live preview
+          </p>
+          <h2 class="sc-title">
+            Everything you need,<br/>
+            <span class="accent">in one dashboard</span>
+          </h2>
+          <p class="sc-subtitle">Built for speed. Designed for clarity. Engineered to scale.</p>
+        </div>
+
+        <!-- The 3-D card -->
+        <div class="sc-card" id="scCard" aria-label="Product dashboard screenshot">
+          <div class="sc-card-inner">
+            <div class="sc-dashboard">
+
+              <!-- Sidebar -->
+              <aside class="sc-sidebar" aria-hidden="true">
+                <div class="sc-sidebar-logo">
+                  <span class="logo-bracket">[</span>W<span class="logo-bracket">]</span>
+                </div>
+                <nav class="sc-nav-icons">
+                  <div class="sc-nav-icon sc-nav-icon--active" title="Dashboard">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+                  </div>
+                  <div class="sc-nav-icon" title="Analytics">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l3-4 3 2 3-5 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="sc-nav-icon" title="Projects">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5 8h6M5 5h6M5 11h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </div>
+                  <div class="sc-nav-icon" title="Terminal">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M4 6l3 2-3 2M8 10h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </nav>
+              </aside>
+
+              <!-- Main content -->
+              <main class="sc-main" aria-hidden="true">
+                <div class="sc-topbar">
+                  <span class="sc-page-title">Overview</span>
+                  <div class="sc-topbar-actions">
+                    <div class="sc-search-pill">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="1.2"/><path d="M8 8l2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                      <span>Search…</span>
+                    </div>
+                    <div class="sc-avatar">W</div>
+                  </div>
+                </div>
+
+                <div class="sc-kpi-row">
+                  <div class="sc-kpi"><span class="sc-kpi-label">Requests / day</span><span class="sc-kpi-value">10.4M</span><span class="sc-kpi-delta sc-kpi-delta--up">↑ 12%</span></div>
+                  <div class="sc-kpi"><span class="sc-kpi-label">Avg latency</span><span class="sc-kpi-value">38ms</span><span class="sc-kpi-delta sc-kpi-delta--up">↓ 8%</span></div>
+                  <div class="sc-kpi"><span class="sc-kpi-label">Uptime</span><span class="sc-kpi-value">99.98%</span><span class="sc-kpi-delta sc-kpi-delta--up">↑ 0.02%</span></div>
+                  <div class="sc-kpi"><span class="sc-kpi-label">Error rate</span><span class="sc-kpi-value">0.04%</span><span class="sc-kpi-delta sc-kpi-delta--down">↑ 0.01%</span></div>
+                </div>
+
+                <div class="sc-content-row">
+                  <div class="sc-chart-card">
+                    <div class="sc-chart-header">
+                      <span class="sc-chart-title">Request volume</span>
+                      <span class="sc-chart-period">Last 7 days</span>
+                    </div>
+                    <svg class="sc-sparkline" viewBox="0 0 300 80" preserveAspectRatio="none" aria-label="Request volume sparkline">
+                      <defs>
+                        <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.25"/>
+                          <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+                        </linearGradient>
+                      </defs>
+                      <path d="M0,65 C30,60 50,45 80,40 C110,35 130,50 160,30 C190,10 210,20 240,15 C265,10 285,18 300,12 L300,80 L0,80 Z" fill="url(#sparkGrad)"/>
+                      <path d="M0,65 C30,60 50,45 80,40 C110,35 130,50 160,30 C190,10 210,20 240,15 C265,10 285,18 300,12" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round"/>
+                      <circle cx="80"  cy="40" r="3" fill="#00e5ff"/>
+                      <circle cx="160" cy="30" r="3" fill="#00e5ff"/>
+                      <circle cx="240" cy="15" r="3" fill="#00e5ff"/>
+                      <circle cx="300" cy="12" r="3" fill="#00e5ff"/>
+                    </svg>
+                  </div>
+
+                  <div class="sc-activity-card">
+                    <span class="sc-chart-title">Recent deploys</span>
+                    <ul class="sc-activity-list">
+                      <li class="sc-activity-item"><span class="sc-activity-dot sc-activity-dot--green"></span><span class="sc-activity-text">v2.4.1 — edge / prod</span><span class="sc-activity-time">2m ago</span></li>
+                      <li class="sc-activity-item"><span class="sc-activity-dot sc-activity-dot--green"></span><span class="sc-activity-text">v2.4.0 — api / prod</span><span class="sc-activity-time">1h ago</span></li>
+                      <li class="sc-activity-item"><span class="sc-activity-dot sc-activity-dot--amber"></span><span class="sc-activity-text">v2.3.9 — web / staging</span><span class="sc-activity-time">3h ago</span></li>
+                      <li class="sc-activity-item"><span class="sc-activity-dot sc-activity-dot--green"></span><span class="sc-activity-text">v2.3.8 — db / prod</span><span class="sc-activity-time">6h ago</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </main>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ============================================================
        ABOUT SECTION
   ============================================================ -->
   <section class="section about" id="about" aria-labelledby="about-heading">
     <div class="container">
- 
+
       <!-- Section label -->
       <div class="section-label" aria-hidden="true">
         <span class="label-num">01</span>
         <span class="label-line"></span>
         <span class="label-text">About</span>
       </div>
- 
+
       <div class="about-grid">
         <!-- Left: text -->
         <div class="about-text">
@@ -183,7 +310,7 @@
             cloud-native microservices. I'm passionate about open source, clean code,
             and shipping things that actually work.
           </p>
- 
+
           <!-- Highlight tags -->
           <div class="about-tags">
             <span class="tag">Open Source</span>
@@ -192,7 +319,7 @@
             <span class="tag">Performance</span>
             <span class="tag">Mentorship</span>
           </div>
- 
+
           <a href="#" class="btn btn-outline" download>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M8 2v8M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -200,20 +327,20 @@
             Download Resume
           </a>
         </div>
- 
+
         <!-- Right: image + floating badges -->
         <div class="about-visual">
           <div class="about-image-wrap">
             <img
               src="https://images.unsplash.com/photo-1537511446984-935f663eb1f4?w=600&q=80"
-              alt="Alex Mercer at work"
+              alt="Waleed at work"
               class="about-img"
               loading="lazy"
             />
             <!-- Decorative grid overlay -->
             <div class="img-grid-overlay" aria-hidden="true"></div>
           </div>
- 
+
           <!-- Floating info cards -->
           <div class="float-card float-card--tl" aria-hidden="true">
             <div class="float-card-icon">⚡</div>
@@ -222,7 +349,7 @@
               <p class="float-card-sub">Avg response</p>
             </div>
           </div>
- 
+
           <div class="float-card float-card--br" aria-hidden="true">
             <div class="float-card-icon">🚀</div>
             <div>
@@ -234,26 +361,26 @@
       </div>
     </div>
   </section>
- 
+
   <!-- ============================================================
        SKILLS SECTION
   ============================================================ -->
   <section class="section skills" id="skills" aria-labelledby="skills-heading">
     <div class="container">
- 
+
       <div class="section-label" aria-hidden="true">
         <span class="label-num">02</span>
         <span class="label-line"></span>
         <span class="label-text">Skills</span>
       </div>
- 
+
       <h2 class="section-heading" id="skills-heading">
         My technical <span class="accent">arsenal</span>
       </h2>
- 
+
       <!-- Skill categories -->
       <div class="skills-grid">
- 
+
         <!-- Category: Frontend -->
         <div class="skill-category reveal-up">
           <div class="skill-cat-header">
@@ -272,7 +399,7 @@
             <li class="skill-item"><span class="skill-name">CSS / Tailwind</span><div class="skill-bar"><div class="skill-fill" style="--pct: 92%"></div></div><span class="skill-pct">92</span></li>
           </ul>
         </div>
- 
+
         <!-- Category: Backend -->
         <div class="skill-category reveal-up" style="--delay: 0.1s">
           <div class="skill-cat-header">
@@ -293,7 +420,7 @@
             <li class="skill-item"><span class="skill-name">GraphQL / REST</span><div class="skill-bar"><div class="skill-fill" style="--pct: 90%"></div></div><span class="skill-pct">90</span></li>
           </ul>
         </div>
- 
+
         <!-- Category: Infrastructure -->
         <div class="skill-category reveal-up" style="--delay: 0.2s">
           <div class="skill-cat-header">
@@ -313,9 +440,9 @@
             <li class="skill-item"><span class="skill-name">PostgreSQL / Redis</span><div class="skill-bar"><div class="skill-fill" style="--pct: 91%"></div></div><span class="skill-pct">91</span></li>
           </ul>
         </div>
- 
+
       </div>
- 
+
       <!-- Tech logos ticker -->
       <div class="ticker-wrap" aria-label="Technologies I use">
         <div class="ticker-track">
@@ -377,19 +504,19 @@
       </div>
     </div>
   </section>
- 
+
   <!-- ============================================================
        PROJECTS SECTION
   ============================================================ -->
   <section class="section projects" id="projects" aria-labelledby="projects-heading">
     <div class="container">
- 
+
       <div class="section-label" aria-hidden="true">
         <span class="label-num">03</span>
         <span class="label-line"></span>
         <span class="label-text">Projects</span>
       </div>
- 
+
       <div class="projects-header">
         <h2 class="section-heading" id="projects-heading">
           Featured <span class="accent">work</span>
@@ -402,10 +529,10 @@
           <button class="filter-btn" role="tab" aria-selected="false" data-filter="oss">Open Source</button>
         </div>
       </div>
- 
+
       <!-- Project cards grid -->
       <div class="projects-grid" id="projectsGrid">
- 
+
         <!-- Project 1 — featured (spans 2 cols) -->
         <article class="project-card project-card--featured" data-category="fullstack" aria-label="NovaBench project">
           <div class="project-card-media">
@@ -443,7 +570,7 @@
             </div>
           </div>
         </article>
- 
+
         <!-- Project 2 -->
         <article class="project-card" data-category="backend" aria-label="Orion Cache project">
           <div class="project-card-media">
@@ -475,7 +602,7 @@
             </div>
           </div>
         </article>
- 
+
         <!-- Project 3 -->
         <article class="project-card" data-category="fullstack" aria-label="Prism Analytics project">
           <div class="project-card-media">
@@ -507,7 +634,7 @@
             </div>
           </div>
         </article>
- 
+
         <!-- Project 4 -->
         <article class="project-card" data-category="oss" aria-label="FlowQL open source project">
           <div class="project-card-media">
@@ -538,9 +665,9 @@
             </div>
           </div>
         </article>
- 
+
       </div>
- 
+
       <!-- "More on GitHub" link -->
       <div class="projects-footer">
         <a href="#" class="btn btn-ghost">
@@ -552,26 +679,26 @@
       </div>
     </div>
   </section>
- 
+
   <!-- ============================================================
        EXPERIENCE SECTION — Vertical timeline
   ============================================================ -->
   <section class="section experience" id="experience" aria-labelledby="experience-heading">
     <div class="container">
- 
+
       <div class="section-label" aria-hidden="true">
         <span class="label-num">04</span>
         <span class="label-line"></span>
         <span class="label-text">Experience</span>
       </div>
- 
+
       <h2 class="section-heading" id="experience-heading">
         Career <span class="accent">timeline</span>
       </h2>
- 
+
       <!-- Timeline -->
       <div class="timeline" role="list">
- 
+
         <div class="timeline-item reveal-up" role="listitem">
           <div class="timeline-dot" aria-hidden="true"></div>
           <div class="timeline-content">
@@ -598,7 +725,7 @@
             </div>
           </div>
         </div>
- 
+
         <div class="timeline-item reveal-up" style="--delay: 0.1s" role="listitem">
           <div class="timeline-dot" aria-hidden="true"></div>
           <div class="timeline-content">
@@ -624,7 +751,7 @@
             </div>
           </div>
         </div>
- 
+
         <div class="timeline-item reveal-up" style="--delay: 0.2s" role="listitem">
           <div class="timeline-dot" aria-hidden="true"></div>
           <div class="timeline-content">
@@ -650,23 +777,23 @@
             </div>
           </div>
         </div>
- 
+
       </div>
     </div>
   </section>
- 
+
   <!-- ============================================================
        CONTACT SECTION
   ============================================================ -->
   <section class="section contact" id="contact" aria-labelledby="contact-heading">
     <div class="container">
- 
+
       <div class="section-label" aria-hidden="true">
         <span class="label-num">05</span>
         <span class="label-line"></span>
         <span class="label-text">Contact</span>
       </div>
- 
+
       <div class="contact-grid">
         <!-- Left: big CTA text -->
         <div class="contact-text">
@@ -679,7 +806,7 @@
             Open to full-time roles, freelance projects, and interesting conversations.
             Response time: usually within 24 hours.
           </p>
- 
+
           <!-- Social links -->
           <div class="social-links">
             <a href="#" class="social-link" aria-label="GitHub profile">
@@ -696,7 +823,7 @@
             </a>
           </div>
         </div>
- 
+
         <!-- Right: contact form -->
         <form class="contact-form" id="contactForm" novalidate aria-label="Contact form">
           <div class="form-group">
@@ -712,7 +839,7 @@
             />
             <span class="form-error" role="alert" aria-live="polite"></span>
           </div>
- 
+
           <div class="form-group">
             <label class="form-label" for="email">Email</label>
             <input
@@ -726,7 +853,7 @@
             />
             <span class="form-error" role="alert" aria-live="polite"></span>
           </div>
- 
+
           <div class="form-group">
             <label class="form-label" for="subject">Subject</label>
             <input
@@ -739,7 +866,7 @@
             />
             <span class="form-error" role="alert" aria-live="polite"></span>
           </div>
- 
+
           <div class="form-group">
             <label class="form-label" for="message">Message</label>
             <textarea
@@ -752,14 +879,14 @@
             ></textarea>
             <span class="form-error" role="alert" aria-live="polite"></span>
           </div>
- 
+
           <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
             <span class="btn-label">Send Message</span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
- 
+
           <!-- Success state -->
           <div class="form-success" id="formSuccess" aria-live="polite" hidden>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 10l2.5 2.5 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -769,7 +896,7 @@
       </div>
     </div>
   </section>
- 
+
   <!-- ============================================================
        FOOTER
   ============================================================ -->
@@ -777,7 +904,7 @@
     <div class="container">
       <div class="footer-inner">
         <p class="footer-copy">
-          © 2025 Alex Mercer. Built with
+          © 2025 Waleed. Built with
           <span class="footer-heart" aria-label="love">♥</span>
           and way too much coffee.
         </p>
@@ -792,7 +919,7 @@
       </div>
     </div>
   </footer>
- 
+
   <!-- D3 for globe rendering -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <!-- Main JS -->
